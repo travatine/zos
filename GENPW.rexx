@@ -5,10 +5,10 @@
 /*                                                                         */
 @L='abcdefghijklmnopqrstuvwxyz'; @U=@L; upper @U                        
 @#= 0123456789                                                          
-@@= #£@                                                                 
+@@= #$@                                                                 
 /* To include all special chars from OA43999 uncomment below line and      */
 /* comment out line above                                                  */
-/* @@= '#£@.<+|&!*-%_>?:=' */
+/* @@= '#$@.<+|&!*-%_>?:=' */
 parse arg L N seed xxx yyy .                                            
 if L=='?'               then signal help                                
 if L=='' | L==","       then L=8                                        
@@ -21,21 +21,21 @@ if L<4                  then call serr "password length, it's too small (< 4):"
 if L>80                 then call serr "password length, it's too large (> 80)"
 if \datatype(N,   'W')  then call serr "number of passwords, "         
                                                                         
-    do g=1  to N;       £=                                              
+    do g=1  to N;       $=                                              
         do k=1  for L;       z=k;   if z>4  then z=random(1,4)          
-        if z==1  then £=£ || substr(@L,random(1,length(@L)),1)          
-        if z==2  then £=£ || substr(@U,random(1,length(@U)),1)          
-        if z==3  then £=£ || substr(@#,random(1,length(@#)),1)          
-        if z==4  then £=£ || substr(@@,random(1,length(@@)),1)          
+        if z==1  then $=$ || substr(@L,random(1,length(@L)),1)          
+        if z==2  then $=$ || substr(@U,random(1,length(@U)),1)          
+        if z==3  then $=$ || substr(@#,random(1,length(@#)),1)          
+        if z==4  then $=$ || substr(@@,random(1,length(@@)),1)          
         end   /*k*/                                                     
                                                                         
         do a=1  for L;          b=random(1, L)                          
-        parse var £ =(a) x +1 =(b)  y  +1                               
-        £=overlay(x,£,b);       £=overlay(y,£,a)                        
+        parse var $ =(a) x +1 =(b)  y  +1                               
+        $=overlay(x,$,b);       $=overlay(y,$,a)                        
         end  /*L+L*/                                                    
                                                                         
-    say right(g, length(N))  'password is: '  £                         
-    /*      call lineout 'GENPW.PW', £  */                              
+    say right(g, length(N))  'password is: '  $                         
+    /*      call lineout 'GENPW.PW', $  */                              
     end      /*g*/                                                      
 exit                                                                    
 weed:  parse arg ig;   @L=dont(@L);   @U=dont(@U);   @#=dont(@#);   @@=d
